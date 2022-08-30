@@ -16,6 +16,8 @@ class Input extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: obscure,
+      textInputAction: TextInputAction.next,
+      // maxLength: 16,
       decoration: InputDecoration(
           isCollapsed: true,
           contentPadding:
