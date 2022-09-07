@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:the_movie/screens/movies/muvies_popular_screen.dart';
+import 'package:the_movie/screens/movies/movies_popular_screen.dart';
 import 'package:the_movie/theme/app_colors.dart';
 
 class MainScreen extends StatefulWidget {
@@ -13,12 +13,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedTab = 1;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text('News'),
-    MoviesPolularScreen(),
-    Text('Tv Show'),
-  ];
-
   void _onSelectTab(int index) {
     setState(() {
       _selectedTab = index;
@@ -29,10 +23,15 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('TMDB')),
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: _widgetOptions[_selectedTab],
+      body: Container(
+        color: Colors.white,
+        child: IndexedStack(
+          index: _selectedTab,
+          children: const [
+            Text('News'),
+            MoviesPolularScreen(),
+            Text('Tv Show'),
+          ],
         ),
       ),
       bottomNavigationBar: Container(
