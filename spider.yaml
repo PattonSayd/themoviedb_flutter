@@ -14,9 +14,9 @@ use_part_of: true
 use_references_list: false
 
 # Location where all the generated references will be stored
-package: resources
+package: app/resources
 
 groups:
   - path: assets/images
-    class_name: AppImages
-    types: [ .png, .jpg, .jpeg, .webp, .webm, .bmp ]
+    class_name: AppAssets
+    types: [ .png, .jpg, .jpeg, .webp, .webm, .bmp, .svg ]

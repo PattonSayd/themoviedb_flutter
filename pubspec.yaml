@@ -35,6 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_nav_bar: ^5.0.6
   spider: 
+  flutter_secure_storage: ^6.0.0
 
 
 dev_dependencies:
