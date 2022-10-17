@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:the_movie/app/resources/resources.dart';
 import 'package:the_movie/services/domain/api_client/api_client.dart';
 import 'package:the_movie/ui/screens/movies/models/movie_list_model.dart';
 
@@ -20,6 +18,7 @@ class MoviesPolularScreen extends StatelessWidget {
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             itemExtent: 163,
             itemBuilder: (BuildContext context, int index) {
+              model?.showedMovieAtIndex(index);
               final movie = model?.movies[index];
               final posterPath = movie!.posterPath;
               return Padding(
