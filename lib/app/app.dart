@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:the_movie/app/app_model.dart';
 import 'package:the_movie/services/routes/app_routes.dart';
 
@@ -21,6 +22,15 @@ class MyApp extends StatelessWidget {
           backgroundColor: AppColors.theme,
         ),
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ru', 'RU'),
+        Locale('en', 'EN'),
+      ],
       debugShowCheckedModeBanner: false,
       initialRoute: appRoutes.initialRoute(model.isAuth),
       routes: appRoutes.routes,

@@ -1,67 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie/services/routes/app_routes.dart';
-import 'package:the_movie/ui/screens/movies/viewmodels/movies_model.dart';
+import 'package:intl/intl.dart';
+import 'package:the_movie/app/resources/resources.dart';
+import 'package:the_movie/services/domain/api_client/api_client.dart';
+import 'package:the_movie/ui/screens/movies/models/movie_list_model.dart';
 
-class MoviesPolularScreen extends StatefulWidget {
+import '../../../services/providers/provider.dart';
+
+class MoviesPolularScreen extends StatelessWidget {
   const MoviesPolularScreen({Key? key}) : super(key: key);
 
   @override
-  State<MoviesPolularScreen> createState() => _MoviesPolularScreenState();
-}
-
-class _MoviesPolularScreenState extends State<MoviesPolularScreen> {
-  List<Movies> moviesList = MoviesList.movies;
-  final _searchController = TextEditingController();
-  var _filterMovies = <Movies>[];
-
-  void _searchMovies() {
-    if (_searchController.text.isNotEmpty) {
-      _filterMovies = moviesList.where((Movies movie) {
-        return movie.title
-            .toLowerCase()
-            .contains(_searchController.text.toLowerCase());
-      }).toList();
-    } else {
-      _filterMovies = moviesList;
-    }
-
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _filterMovies = moviesList;
-
-    _searchController.addListener(_searchMovies);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _searchController.dispose();
-    // _searchController.removeListener(() {});
-  }
-
-  void _onMovieTap(int index) {
-    final id = moviesList[index].id;
-    Navigator.of(context).pushNamed(
-      AppRouteName.movieDetails,
-      arguments: id,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final model = NotifierProvider.watch<MovieListModel>(context);
     return Stack(
       children: [
         ListView.builder(
             padding: const EdgeInsets.only(top: 60),
-            itemCount: _filterMovies.length,
+            itemCount: model?.movies.length,
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             itemExtent: 163,
             itemBuilder: (BuildContext context, int index) {
-              final movie = _filterMovies[index];
+              final movie = model?.movies[index];
+              final posterPath = movie!.posterPath;
               return Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -83,12 +43,15 @@ class _MoviesPolularScreenState extends State<MoviesPolularScreen> {
                     color: Colors.transparent,
                     borderRadius: const BorderRadius.all(Radius.circular(6)),
                     child: InkWell(
-                      onTap: () => _onMovieTap(index),
+                      onTap: () => model?.onMovieTap(context, index),
                       child: Row(
                         children: [
-                          Image(
-                            image: AssetImage(movie.imageName),
-                          ),
+                          posterPath != null
+                              ? Image.network(ApiCliet.imageUrl(posterPath))
+                              : SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: const Placeholder()),
                           Expanded(
                             child: Padding(
                               padding:
@@ -107,14 +70,14 @@ class _MoviesPolularScreenState extends State<MoviesPolularScreen> {
                                   ),
                                   const SizedBox(height: 5),
                                   Text(
-                                    movie.time,
+                                    model!.stringFormatDate(movie.releaseDate),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(color: Colors.grey),
                                   ),
                                   const SizedBox(height: 20),
                                   Text(
-                                    movie.description,
+                                    movie.overview,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -132,7 +95,6 @@ class _MoviesPolularScreenState extends State<MoviesPolularScreen> {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: TextField(
-            controller: _searchController,
             style: const TextStyle(fontSize: 17, color: Colors.black87),
             decoration: InputDecoration(
               contentPadding:

@@ -122,27 +122,3 @@ class _RadialPercentPainter extends CustomPainter {
     return true;
   }
 }
-
-
-
-//  Widget build(BuildContext context) {
-//     return const Center(
-//         child: SizedBox(
-//       width: 50,
-//       height: 50,
-//       child: _RadialPercentPainter(
-//         percent: 0.75,
-//         backgroundColor: Color.fromARGB(255, 8, 28, 34),
-//         freeLineColor: Color.fromARGB(255, 30, 66, 40),
-//         lineColor: Color.fromARGB(255, 33, 208, 123),
-//         lineWidth: 3,
-//         child: Text(
-//           '75%',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontWeight: FontWeight.w700,
-//           ),
-//         ),
-//       ),
-//     ));
-//   }

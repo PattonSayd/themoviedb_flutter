@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:the_movie/services/domain/entity/popular_movie_response.dart';
+
 enum ApiClientExceptionType { network, auth, other }
 
 class ApiClientException implements Exception {
@@ -14,6 +16,8 @@ class ApiCliet {
   static const _host = 'https://api.themoviedb.org/3';
   static const _imageUrl = 'https://image.tmdb.org/t/p/w500';
   static const _apiKey = 'e1be18520018bd22bb1555ed4212a6de';
+
+  static String imageUrl(String path) => _imageUrl + path;
 
   Future<String> auth({
     required String username,
@@ -30,9 +34,9 @@ class ApiCliet {
   Future<T> _get<T>(
     String path,
     T Function(dynamic json) parser, [
-    Map<String, dynamic>? apiKey,
+    Map<String, dynamic>? params,
   ]) async {
-    final url = _makeUri(path, apiKey);
+    final url = _makeUri(path, params);
 
     try {
       final request = await _client.getUrl(url);
@@ -94,6 +98,26 @@ class ApiCliet {
     return result;
   }
 
+  Future<PopularMovieResponse> popularMovie(int page, String locale) async {
+    parser(dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = PopularMovieResponse.fromJson(jsonMap);
+      return response;
+    }
+
+    final result = _get(
+      '/movie/popular',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'page': page.toString(),
+        'language': locale,
+      },
+    );
+
+    return result;
+  }
+
   Future<String> _validateUser({
     required String username,
     required String password,
@@ -139,6 +163,9 @@ class ApiCliet {
     return result;
   }
 
+  /* ----------------------------------------------------------------------------------------------------------- */
+  //*"https://api.themoviedb.org/3/movie/popular?api_key=e1be18520018bd22bb1555ed4212a6de&page=1&language=ru_RU" */
+  /* ----------------------------------------------------------------------------------------------------------- */
   Uri _makeUri(String path, [Map<String, dynamic>? parameters]) {
     final uri = Uri.parse('$_host$path');
 

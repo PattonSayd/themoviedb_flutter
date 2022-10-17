@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/resources/resources.dart';
-import '../movies/widgets/progress_bar.dart';
+import '../movies/widgets/radial_percent_widget.dart';
 
 class MovieDetailsInfoScreen extends StatelessWidget {
   const MovieDetailsInfoScreen({Key? key}) : super(key: key);

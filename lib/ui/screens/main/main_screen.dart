@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:the_movie/services/providers/provider.dart';
 import 'package:the_movie/services/providers/session_provider.dart';
+import 'package:the_movie/ui/screens/movies/models/movie_list_model.dart';
 import 'package:the_movie/ui/screens/movies/movies_popular_screen.dart';
 import 'package:the_movie/app/theme/app_colors.dart';
 
@@ -15,12 +17,20 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedTab = 1;
+  final movieListModel = MovieListModel();
 
   void _onSelectTab(int index) {
     if (_selectedTab == index) return;
     setState(() {
       _selectedTab = index;
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    movieListModel.setupLocale(context);
   }
 
   @override
@@ -40,10 +50,13 @@ class _MainScreenState extends State<MainScreen> {
         color: Colors.white,
         child: IndexedStack(
           index: _selectedTab,
-          children: const [
-            NewsScreen(),
-            MoviesPolularScreen(),
-            Text('Tv Show'),
+          children: [
+            const NewsScreen(),
+            NotifierProvider(
+              model: movieListModel,
+              child: const MoviesPolularScreen(),
+            ),
+            const Text('Tv Show'),
           ],
         ),
       ),

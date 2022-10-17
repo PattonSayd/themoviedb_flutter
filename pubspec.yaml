@@ -36,7 +36,12 @@ dependencies:
   google_nav_bar: ^5.0.6
   spider: 
   flutter_secure_storage: ^6.0.0
-
+  json_annotation: ^4.7.0
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+  json_serializable: ^6.5.1
+  build_runner: ^2.3.0
 
 dev_dependencies:
   flutter_test:

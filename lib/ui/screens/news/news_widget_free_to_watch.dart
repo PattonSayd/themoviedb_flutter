@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/app/resources/resources.dart';
 
-import '../movies/widgets/progress_bar.dart';
+import '../movies/widgets/radial_percent_widget.dart';
 
 class NewsWidgetFreeToWatch extends StatefulWidget {
   const NewsWidgetFreeToWatch({Key? key}) : super(key: key);
