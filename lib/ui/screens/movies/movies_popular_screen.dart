@@ -109,6 +109,7 @@ class MoviesPolularScreen extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.black12, width: 1),
               ),
             ),
+            onChanged: model?.searchMovie,
           ),
         )
       ],

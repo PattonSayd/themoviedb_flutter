@@ -98,7 +98,8 @@ class ApiCliet {
     return result;
   }
 
-  Future<PopularMovieResponse> popularMovie(int page, String locale) async {
+  Future<PopularMovieResponse> popularMovie(int page, String locale,
+      [String? searchQuery]) async {
     parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = PopularMovieResponse.fromJson(jsonMap);
@@ -112,6 +113,29 @@ class ApiCliet {
         'api_key': _apiKey,
         'page': page.toString(),
         'language': locale,
+      },
+    );
+
+    return result;
+  }
+
+  Future<PopularMovieResponse> searchMovie(
+      int page, String locale, String query) async {
+    parser(dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = PopularMovieResponse.fromJson(jsonMap);
+      return response;
+    }
+
+    final result = _get(
+      '/search/movie',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'page': page.toString(),
+        'language': locale,
+        'query': query,
+        'include_adult': true.toString()
       },
     );
 
