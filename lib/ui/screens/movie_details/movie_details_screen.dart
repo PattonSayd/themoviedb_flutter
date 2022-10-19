@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_movie/services/domain/api_client/api_client.dart';
 import 'package:the_movie/services/providers/provider.dart';
 import 'package:the_movie/ui/screens/movie_details/models/movie_details_model.dart';
 
@@ -32,16 +33,8 @@ class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
         centerTitle: true,
         title: const _TitleWidget(),
       ),
-      body: ColoredBox(
-        color: const Color.fromRGBO(24, 23, 27, 1.0),
-        child: ListView(
-          children: const [
-            // Text(),
-            _MovieDetailsInfoWidget(),
-            _MovieDetailsCastWidget(),
-          ],
-        ),
-      ),
+      body: const ColoredBox(
+          color: Color.fromRGBO(24, 23, 27, 1.0), child: _BodyWidget()),
     );
   }
 }
@@ -53,5 +46,26 @@ class _TitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
     return Text(model?.movieDetails?.title ?? 'Loading...');
+  }
+}
+
+class _BodyWidget extends StatelessWidget {
+  const _BodyWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    final movieDetails = model?.movieDetails;
+    if (movieDetails == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return ListView(
+      children: const [
+        _MovieDetailsInfoWidget(),
+        _MovieDetailsCastWidget(),
+      ],
+    );
   }
 }

@@ -13,41 +13,28 @@ class _MovieDetailsInfoWidget extends StatelessWidget {
         const SizedBox(height: 10),
         const _SummaryWidget(),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const _TextMovieDetails(
-                text: 'Overview',
-                size: 20,
-                weight: 6,
-              ),
+              const SizedBox(height: 15),
+              _buidOverwiew(),
               const SizedBox(height: 16),
-              const _TextMovieDetails(
-                text:
-                    'Groot discovers a miniature civilization that believes the seemingly enormous tree toddler is the hero they’ve been waiting for.',
-                size: 16,
-                weight: 3,
-              ),
-              const SizedBox(height: 16),
-              Wrap(
-                direction: Axis.horizontal,
-                runSpacing: 16,
-                spacing: 80,
-                children: const [
-                  _PeopleResume(
-                      fullName: 'Stefano Solima', jobTitle: 'Director'),
-                  _PeopleResume(fullName: 'Jeremih Polac', jobTitle: 'Writer'),
-                  _PeopleResume(fullName: 'Jeremih Polac', jobTitle: 'Writer'),
-                  _PeopleResume(fullName: 'Jeremih Polac', jobTitle: 'Writer'),
-                ],
-              ),
+              const _DescriptionWidget(),
+              const SizedBox(height: 26),
+              const _PeopleWidget(),
             ],
           ),
         )
       ],
     );
   }
+
+  Text _buidOverwiew() => const Text(
+        'Overview',
+        style: TextStyle(
+            fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
+      );
 }
 
 class _TopPosterWidget extends StatelessWidget {
@@ -55,20 +42,26 @@ class _TopPosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: const [
-        Image(
-          image: AssetImage(AppAssets.topLittleGuy),
-        ),
-        Positioned(
-          top: 20,
-          left: 20,
-          bottom: 20,
-          child: Image(
-            image: AssetImage(AppAssets.littelGuy),
+    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    final backdropPath = model?.movieDetails?.backdropPath;
+    final posterPath = model?.movieDetails?.posterPath;
+    return AspectRatio(
+      aspectRatio: 390 / 219,
+      child: Stack(
+        children: [
+          backdropPath != null
+              ? Image.network(ApiCliet.imageUrl(backdropPath))
+              : const SizedBox.shrink(),
+          Positioned(
+            top: 20,
+            left: 20,
+            bottom: 20,
+            child: posterPath != null
+                ? Image.network(ApiCliet.imageUrl(posterPath))
+                : const SizedBox.shrink(),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -78,24 +71,27 @@ class _MovieNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    var year = model?.movieDetails?.releaseDate?.year.toString();
+    year = year != null ? ' ($year)' : '';
     return Container(
       padding: const EdgeInsets.all(20.0),
       width: MediaQuery.of(context).size.width,
       child: RichText(
         textAlign: TextAlign.center,
         maxLines: 3,
-        text: const TextSpan(
+        text: TextSpan(
           children: [
             TextSpan(
-              text: 'Little Guy',
-              style: TextStyle(
+              text: model?.movieDetails?.title ?? '',
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
             ),
             TextSpan(
-              text: ' (2022)',
-              style: TextStyle(
+              text: year,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
@@ -112,29 +108,38 @@ class _ScoreWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var movieDetails =
+        StateNotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
+    var voteAverage = movieDetails?.voteAverage ?? 0;
+    voteAverage = voteAverage * 10;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         TextButton(
             onPressed: () {},
             child: Row(
-              children: const [
+              children: [
                 SizedBox(
                   width: 40,
                   height: 40,
                   child: RadialPercentWidget(
-                    percent: 0.72,
-                    fillColor: Color.fromARGB(255, 10, 23, 25),
-                    lineColor: Color.fromARGB(255, 37, 203, 103),
-                    freeColor: Color.fromARGB(255, 25, 54, 31),
+                    percent: voteAverage / 100,
+                    fillColor: const Color.fromARGB(255, 10, 23, 25),
+                    lineColor: voteAverage > 72
+                        ? const Color.fromARGB(255, 37, 203, 103)
+                        : voteAverage < 50
+                            ? const Color.fromARGB(255, 203, 37, 37)
+                            : const Color.fromARGB(255, 200, 203, 37),
+                    freeColor: const Color.fromARGB(255, 25, 54, 31),
                     lineWidth: 3,
-                    child: Text('72'),
+                    child: Text(
+                      voteAverage.toStringAsFixed(0),
+                      style: const TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
-                SizedBox(width: 14),
-                _TextMovieDetails(
-                  text: 'User Score',
-                )
+                const SizedBox(width: 14),
+                const Text('User Score')
               ],
             )),
         Container(
@@ -151,9 +156,7 @@ class _ScoreWidget extends StatelessWidget {
                   color: Colors.white,
                 ),
                 SizedBox(width: 5),
-                _TextMovieDetails(
-                  text: 'Play Trailer',
-                ),
+                Text('Play Trailer'),
               ],
             )),
       ],
@@ -166,21 +169,51 @@ class _SummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    var texts = <String>[];
+    final releaseDate = model?.movieDetails?.releaseDate;
+    if (releaseDate != null) {
+      texts.add(model!.stringFormatDate(releaseDate));
+    }
+    final productionCountries = model?.movieDetails?.productionCountries;
+    if (productionCountries != null && productionCountries.isNotEmpty) {
+      var countries = <String>[];
+      for (var country in productionCountries) {
+        countries.add(country.iso);
+      }
+      texts.add('(${countries.join(', ')})');
+    }
+    final runtime = model?.movieDetails?.runtime ?? 0;
+    final duration = Duration(minutes: runtime);
+    final hours = duration.inHours;
+    final minutes = duration.inMinutes.remainder(60);
+    texts.add('${hours}h ${minutes}m');
+
+    final genres = model?.movieDetails?.genres;
+    if (genres != null && genres.isNotEmpty) {
+      var genresNames = <String>[];
+      for (var genr in genres) {
+        genresNames.add(genr.name);
+      }
+      texts.add(genresNames.join(', '));
+    }
+
     return Container(
       decoration: const BoxDecoration(
         border: Border.symmetric(
           horizontal: BorderSide(width: 1, color: Color.fromRGBO(0, 0, 0, 0.3)),
         ),
       ),
-      child: const ColoredBox(
-        color: Color.fromRGBO(0, 0, 0, 0.1),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        color: const Color.fromRGBO(0, 0, 0, 0.1),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 65),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           child: Text(
-            'PG 08/10/2022 (US) Animation, Family, Comedy, Science Fiction 5m',
+            texts.join(' '),
             maxLines: 3,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w400,
@@ -192,46 +225,76 @@ class _SummaryWidget extends StatelessWidget {
   }
 }
 
-class _PeopleResume extends StatelessWidget {
-  final String fullName;
-  final String jobTitle;
-  const _PeopleResume({
-    Key? key,
-    required this.fullName,
-    required this.jobTitle,
-  }) : super(key: key);
+class _PeopleWidget extends StatelessWidget {
+  const _PeopleWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    final employees = model?.movieDetails?.credits.crew.take(4).toList();
+    if (employees == null || employees.isEmpty) return const SizedBox.shrink();
+    return Row(
       children: [
-        _TextMovieDetails(text: fullName),
-        _TextMovieDetails(text: jobTitle),
+        Flexible(
+          child: Wrap(
+            children: [
+              for (var employee in employees)
+                _buildPeopleResume(context,
+                    fullName: employee.name, jobTitle: employee.job),
+            ],
+          ),
+        ),
       ],
     );
   }
+
+  Widget _buildPeopleResume(context, {fullName, jobTitle}) => LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return SizedBox(
+            width: constraints.maxWidth / 2.05,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  fullName,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(
+                  jobTitle,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const SizedBox(height: 16),
+              ],
+            ),
+          );
+        },
+      );
 }
 
-class _TextMovieDetails extends StatelessWidget {
-  final String text;
-  final double? size;
-  final int? weight;
-  const _TextMovieDetails({
+class _DescriptionWidget extends StatelessWidget {
+  const _DescriptionWidget({
     Key? key,
-    required this.text,
-    this.size = 16,
-    this.weight = 3,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+
     return Text(
-      text,
-      style: TextStyle(
+      model?.movieDetails?.overview ?? '',
+      style: const TextStyle(
         color: Colors.white,
-        fontSize: size,
-        fontWeight: FontWeight.values[weight!],
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
       ),
     );
   }

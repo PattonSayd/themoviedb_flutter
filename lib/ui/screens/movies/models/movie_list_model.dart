@@ -21,6 +21,9 @@ class MovieListModel extends ChangeNotifier {
 
   List<Movie> get movies => List.unmodifiable(_movies);
 
+  String stringFormatDate(DateTime? date) =>
+      date != null ? _dateFormat.format(date) : '';
+
   Future<void> setupLocale(BuildContext context) async {
     final locale = Localizations.localeOf(context).toLanguageTag();
     if (_locale == locale) return;
@@ -35,9 +38,6 @@ class MovieListModel extends ChangeNotifier {
     _movies.clear();
     await _loadNextPage();
   }
-
-  String stringFormatDate(DateTime? date) =>
-      date != null ? _dateFormat.format(date) : '';
 
   Future<PopularMovieResponse> _loadMovies(int nextPage, String locale) async {
     if (_searchQuery == null) {

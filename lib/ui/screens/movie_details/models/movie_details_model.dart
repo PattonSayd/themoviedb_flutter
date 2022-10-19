@@ -12,9 +12,12 @@ class MovieDetailsModel extends ChangeNotifier {
   String _locale = '';
   late DateFormat _dateFormat;
 
+  MovieDetailsModel({required this.movieId});
+
   MovieDetails? get movieDetails => _movieDetails;
 
-  MovieDetailsModel({required this.movieId});
+  String stringFormatDate(DateTime? date) =>
+      date != null ? _dateFormat.format(date) : '';
 
   Future<void> setupLocale(BuildContext context) async {
     final locale = Localizations.localeOf(context).toLanguageTag();
