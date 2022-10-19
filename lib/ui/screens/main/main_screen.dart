@@ -52,8 +52,9 @@ class _MainScreenState extends State<MainScreen> {
           index: _selectedTab,
           children: [
             const NewsScreen(),
-            NotifierProvider(
-              model: movieListModel,
+            StateNotifierProvider(
+              create: () => movieListModel,
+              isDisposeModel: false,
               child: const MoviesPolularScreen(),
             ),
             const Text('Tv Show'),

@@ -66,7 +66,7 @@ class _FormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = NotifierProvider.read<AuthModel>(context)!;
+    final model = StateNotifierProvider.read<AuthModel>(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -104,7 +104,7 @@ class _LoginButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = NotifierProvider.watch<AuthModel>(context);
+    final model = StateNotifierProvider.watch<AuthModel>(context);
     final onPressed = model!.canStartAuth ? () => model.auth(context) : null;
     final child = model.authInProgress == true
         ? const SizedBox(
@@ -130,7 +130,7 @@ class _ErrorMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final errorMessage =
-        NotifierProvider.watch<AuthModel>(context)?.errorMessage;
+        StateNotifierProvider.watch<AuthModel>(context)?.errorMessage;
     if (errorMessage == null) return const SizedBox.shrink();
 
     return Padding(

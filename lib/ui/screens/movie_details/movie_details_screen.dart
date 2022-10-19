@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie/ui/screens/movie_details/movie_details_info_screen.dart';
-import 'package:the_movie/ui/screens/movie_details/movie_details_cast_screen.dart';
+import 'package:the_movie/services/providers/provider.dart';
+import 'package:the_movie/ui/screens/movie_details/models/movie_details_model.dart';
+
+import '../../../app/resources/resources.dart';
+import '../movies/widgets/radial_percent_widget.dart';
+
+part 'widgets/movie_details_info_widget.dart';
+part 'widgets/movie_details_cast_widget.dart';
 
 class MovieDetalisScreen extends StatefulWidget {
-  final int id;
   const MovieDetalisScreen({
     Key? key,
-    required this.id,
   }) : super(key: key);
 
   @override
@@ -15,20 +19,39 @@ class MovieDetalisScreen extends StatefulWidget {
 
 class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    StateNotifierProvider.read<MovieDetailsModel>(context)
+        ?.setupLocale(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Film name'),
+        centerTitle: true,
+        title: const _TitleWidget(),
       ),
       body: ColoredBox(
         color: const Color.fromRGBO(24, 23, 27, 1.0),
         child: ListView(
           children: const [
-            MovieDetailsInfoScreen(),
-            MovieDetailsCastScreen(),
+            // Text(),
+            _MovieDetailsInfoWidget(),
+            _MovieDetailsCastWidget(),
           ],
         ),
       ),
     );
+  }
+}
+
+class _TitleWidget extends StatelessWidget {
+  const _TitleWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    return Text(model?.movieDetails?.title ?? 'Loading...');
   }
 }

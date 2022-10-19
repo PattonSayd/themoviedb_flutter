@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:the_movie/services/domain/entity/popular_movie_response.dart';
 
+import '../entity/movie_details.dart';
+
 enum ApiClientExceptionType { network, auth, other }
 
 class ApiClientException implements Exception {
@@ -98,8 +100,11 @@ class ApiCliet {
     return result;
   }
 
-  Future<PopularMovieResponse> popularMovie(int page, String locale,
-      [String? searchQuery]) async {
+  Future<PopularMovieResponse> popularMovie(
+    int page,
+    String locale, [
+    String? searchQuery,
+  ]) async {
     parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = PopularMovieResponse.fromJson(jsonMap);
@@ -120,7 +125,10 @@ class ApiCliet {
   }
 
   Future<PopularMovieResponse> searchMovie(
-      int page, String locale, String query) async {
+    int page,
+    String locale,
+    String query,
+  ) async {
     parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = PopularMovieResponse.fromJson(jsonMap);
@@ -136,6 +144,28 @@ class ApiCliet {
         'language': locale,
         'query': query,
         'include_adult': true.toString()
+      },
+    );
+
+    return result;
+  }
+
+  Future<MovieDetails> movieDetails(
+    int movieId,
+    String locale,
+  ) async {
+    parser(dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = MovieDetails.fromJson(jsonMap);
+      return response;
+    }
+
+    final result = _get(
+      '/movie/$movieId',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'language': locale,
       },
     );
 

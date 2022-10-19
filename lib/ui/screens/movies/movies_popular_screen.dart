@@ -9,7 +9,7 @@ class MoviesPolularScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = NotifierProvider.watch<MovieListModel>(context);
+    final model = StateNotifierProvider.watch<MovieListModel>(context);
     return Stack(
       children: [
         ListView.builder(

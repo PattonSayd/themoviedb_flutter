@@ -76,7 +76,8 @@ class MovieListModel extends ChangeNotifier {
     searcTimer = Timer(const Duration(milliseconds: 300), () async {
       final searchQuery = text.isNotEmpty ? text : null;
       if (_searchQuery == searchQuery) return;
-      _searchQuery = _searchQuery;
+      _searchQuery = searchQuery;
+
       await _resetList();
     });
   }

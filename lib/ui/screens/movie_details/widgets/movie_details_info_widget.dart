@@ -1,11 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
+part of '../movie_details_screen.dart';
 
-import '../../../app/resources/resources.dart';
-import '../movies/widgets/radial_percent_widget.dart';
-
-class MovieDetailsInfoScreen extends StatelessWidget {
-  const MovieDetailsInfoScreen({Key? key}) : super(key: key);
+class _MovieDetailsInfoWidget extends StatelessWidget {
+  const _MovieDetailsInfoWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

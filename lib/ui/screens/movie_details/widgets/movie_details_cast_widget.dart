@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
+part of '../movie_details_screen.dart';
 
-import '../../../app/resources/resources.dart';
-
-class MovieDetailsCastScreen extends StatelessWidget {
-  const MovieDetailsCastScreen({Key? key}) : super(key: key);
+class _MovieDetailsCastWidget extends StatelessWidget {
+  const _MovieDetailsCastWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
