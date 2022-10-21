@@ -34,9 +34,11 @@ class AuthModel extends ChangeNotifier {
     notifyListeners();
 
     String? sessionId;
+    int? accountId;
 
     try {
       sessionId = await _apiClient.auth(username: login, password: password);
+      accountId = await _apiClient.getAccountInfo(sessionId);
     } on ApiClientException catch (e) {
       switch (e.type) {
         case ApiClientExceptionType.network:
@@ -60,12 +62,13 @@ class AuthModel extends ChangeNotifier {
       return;
     }
 
-    if (sessionId == null) {
+    if (sessionId == null || accountId == null) {
       _errorMessage = 'Unknown error, please try again';
       notifyListeners();
       return;
     }
     await _sessionProvider.setSessionId(sessionId);
+    await _sessionProvider.setAccountId(accountId);
     unawaited(
         Navigator.of(context).pushReplacementNamed(AppRouteName.mainScreen));
   }

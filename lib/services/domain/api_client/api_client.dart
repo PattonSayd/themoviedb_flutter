@@ -7,6 +7,20 @@ import '../entity/movie_details.dart';
 
 enum ApiClientExceptionType { network, auth, other }
 
+enum MediaType { movie, tv }
+
+extension MediaTypeAsString on MediaType {
+  String asString() {
+    switch (this) {
+      case MediaType.movie:
+        return 'movie';
+
+      case MediaType.tv:
+        return 'tv';
+    }
+  }
+}
+
 class ApiClientException implements Exception {
   final ApiClientExceptionType type;
 
@@ -79,7 +93,7 @@ class ApiCliet {
       throw ApiClientException(ApiClientExceptionType.auth);
     } on ApiClientException {
       rethrow;
-    } catch (_) {
+    } catch (e) {
       throw ApiClientException(ApiClientExceptionType.other);
     }
   }
@@ -95,6 +109,27 @@ class ApiCliet {
       '/authentication/token/new',
       parser,
       <String, dynamic>{'api_key': _apiKey},
+    );
+
+    return result;
+  }
+
+  Future<int> getAccountInfo(
+    String sessionId,
+  ) async {
+    parser(dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final result = jsonMap['id'] as int;
+      return result;
+    }
+
+    final result = _get(
+      '/account',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'session_id': sessionId,
+      },
     );
 
     return result;
@@ -164,12 +199,59 @@ class ApiCliet {
       '/movie/$movieId',
       parser,
       <String, dynamic>{
-        'append_to_response': 'credits',
+        'append_to_response': 'credits,videos',
         'api_key': _apiKey,
         'language': locale,
       },
     );
 
+    return result;
+  }
+
+  Future<bool> isFavorite(
+    int movieId,
+    String sessionId,
+  ) async {
+    parser(dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final result = jsonMap['favorite'] as bool;
+      return result;
+    }
+
+    final result = _get(
+      '/movie/$movieId/account_states',
+      parser,
+      <String, dynamic>{'api_key': _apiKey, 'session_id': sessionId},
+    );
+
+    return result;
+  }
+
+  Future<String> markAsFavorite({
+    required int accountId,
+    required String sessionId,
+    required int mediaId,
+    required MediaType mediaType,
+    required bool isFavorite,
+  }) async {
+    parser(dynamic json) {
+      return '';
+    }
+
+    final parameters = <String, dynamic>{
+      'media_id': mediaId,
+      'media_type': mediaType.asString(),
+      'favorite': isFavorite,
+    };
+    final result = _post(
+      '/account/$accountId/favorite',
+      parameters,
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'session_id': sessionId,
+      },
+    );
     return result;
   }
 

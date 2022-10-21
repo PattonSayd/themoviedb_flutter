@@ -60,6 +60,19 @@ class _TopPosterWidget extends StatelessWidget {
                 ? Image.network(ApiCliet.imageUrl(posterPath))
                 : const SizedBox.shrink(),
           ),
+          Positioned(
+            top: 5,
+            right: 5,
+            child: IconButton(
+              onPressed: () => model?.toggleFavorite(),
+              icon: Icon(
+                color: Colors.amber,
+                model?.isFavorite == true
+                    ? Icons.favorite
+                    : Icons.favorite_border,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -112,6 +125,11 @@ class _ScoreWidget extends StatelessWidget {
         StateNotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
     var voteAverage = movieDetails?.voteAverage ?? 0;
     voteAverage = voteAverage * 10;
+    final videos = movieDetails?.videos.results
+        .where((video) => video.type == 'Trailer' && video.site == 'YouTube');
+
+    var trailerKey = videos?.isNotEmpty == true ? videos?.first.key : null;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -120,18 +138,18 @@ class _ScoreWidget extends StatelessWidget {
             child: Row(
               children: [
                 SizedBox(
-                  width: 40,
-                  height: 40,
+                  width: 45,
+                  height: 45,
                   child: RadialPercentWidget(
                     percent: voteAverage / 100,
+                    lineWidth: 3,
                     fillColor: const Color.fromARGB(255, 10, 23, 25),
+                    freeColor: const Color.fromARGB(255, 25, 54, 31),
                     lineColor: voteAverage > 72
                         ? const Color.fromARGB(255, 37, 203, 103)
                         : voteAverage < 50
                             ? const Color.fromARGB(255, 203, 37, 37)
                             : const Color.fromARGB(255, 200, 203, 37),
-                    freeColor: const Color.fromARGB(255, 25, 54, 31),
-                    lineWidth: 3,
                     child: Text(
                       voteAverage.toStringAsFixed(0),
                       style: const TextStyle(color: Colors.white),
@@ -139,7 +157,10 @@ class _ScoreWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 14),
-                const Text('User Score')
+                const Text(
+                  'User Score',
+                  style: TextStyle(color: Colors.white),
+                )
               ],
             )),
         Container(
@@ -148,15 +169,22 @@ class _ScoreWidget extends StatelessWidget {
           color: Colors.grey,
         ),
         TextButton(
-            onPressed: () {},
+            onPressed: trailerKey != null
+                ? () => Navigator.of(context)
+                    .pushNamed(AppRouteName.movieTrailer, arguments: trailerKey)
+                : null,
             child: Row(
-              children: const [
+              children: [
                 Icon(
                   Icons.play_arrow,
-                  color: Colors.white,
+                  color: trailerKey != null ? Colors.white : Colors.grey,
                 ),
-                SizedBox(width: 5),
-                Text('Play Trailer'),
+                const SizedBox(width: 5),
+                Text(
+                  'Play Trailer',
+                  style: TextStyle(
+                      color: trailerKey != null ? Colors.white : Colors.grey),
+                ),
               ],
             )),
       ],

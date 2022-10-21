@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/services/domain/api_client/api_client.dart';
 import 'package:the_movie/services/providers/provider.dart';
+import 'package:the_movie/services/routes/app_routes.dart';
 import 'package:the_movie/ui/screens/movie_details/models/movie_details_model.dart';
 
-import '../../../app/resources/resources.dart';
 import '../movies/widgets/radial_percent_widget.dart';
 
 part 'widgets/movie_details_info_widget.dart';
@@ -28,13 +28,28 @@ class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    final posterPath = model?.movieDetails?.posterPath;
+    late String fullPath = '';
+    if (posterPath != null) {
+      fullPath = ApiCliet.imageUrl(posterPath);
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const _TitleWidget(),
       ),
-      body: const ColoredBox(
-          color: Color.fromRGBO(24, 23, 27, 1.0), child: _BodyWidget()),
+      body: FutureBuilder(
+        future: fullPath.isNotEmpty
+            ? model?.getImagePalette(NetworkImage(fullPath))
+            : null,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return ColoredBox(
+            color: snapshot.data ?? Colors.transparent,
+            child: const _BodyWidget(),
+          );
+        },
+      ),
     );
   }
 }

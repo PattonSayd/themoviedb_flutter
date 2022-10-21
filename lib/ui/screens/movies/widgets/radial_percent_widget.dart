@@ -63,16 +63,16 @@ class _RadialPercentPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final rect = _calculateCirclesRect(size);
-    _darwBackground(canvas, rect);
+    _darwBackground(canvas, size);
     _darwFreeSpace(canvas, rect);
     _darwFiledSpace(canvas, rect);
   }
 
-  void _darwBackground(Canvas canvas, Rect rect) {
+  void _darwBackground(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = fillColor
       ..style = PaintingStyle.fill;
-    canvas.drawOval(rect, paint);
+    canvas.drawOval(Offset.zero & size, paint);
   }
 
   void _darwFiledSpace(Canvas canvas, Rect rect) {
@@ -112,8 +112,8 @@ class _RadialPercentPainter extends CustomPainter {
 
   Rect _calculateCirclesRect(Size size) {
     final offset = lineWidth / 2;
-    final rect = Offset(offset, offset) &
-        Size(size.width - lineWidth, size.height - lineWidth);
+    final rect = Offset(offset + 2, offset + 2) &
+        Size(size.width - lineWidth - 4, size.height - lineWidth - 4);
     return rect;
   }
 
