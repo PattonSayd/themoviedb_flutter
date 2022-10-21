@@ -5,7 +5,12 @@ import 'package:the_movie/services/domain/entity/popular_movie_response.dart';
 
 import '../entity/movie_details.dart';
 
-enum ApiClientExceptionType { network, auth, other }
+enum ApiClientExceptionType {
+  network,
+  auth,
+  other,
+  sessionExpired,
+}
 
 enum MediaType { movie, tv }
 
@@ -317,9 +322,10 @@ class ApiCliet {
     if (response.statusCode == 401) {
       final code = json['status_code'] is int ? json['status_code'] : 0;
       code == 30
-          ? throw ApiClientException(
-              ApiClientExceptionType.auth) // Api key error
-          : throw ApiClientException(ApiClientExceptionType.other);
+          ? throw ApiClientException(ApiClientExceptionType.auth)
+          : code == 3
+              ? throw ApiClientException(ApiClientExceptionType.sessionExpired)
+              : throw ApiClientException(ApiClientExceptionType.other);
     }
   }
 }

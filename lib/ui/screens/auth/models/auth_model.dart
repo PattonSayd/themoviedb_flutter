@@ -51,6 +51,10 @@ class AuthModel extends ChangeNotifier {
         case ApiClientExceptionType.other:
           _errorMessage = 'An error occurred, please try again';
           break;
+        case ApiClientExceptionType.sessionExpired:
+          _errorMessage = 'Reset your session';
+
+          break;
       }
     } catch (e) {
       _errorMessage = 'An error occurred, please try again';
@@ -68,8 +72,9 @@ class AuthModel extends ChangeNotifier {
       return;
     }
     await _sessionProvider.setSessionId(sessionId);
-    await _sessionProvider.setAccountId(accountId);
-    unawaited(
-        Navigator.of(context).pushReplacementNamed(AppRouteName.mainScreen));
+    await _sessionProvider.setAccountId(accountId).then(
+          (value) => Navigator.of(context)
+              .pushReplacementNamed(AppRouteName.mainScreen),
+        );
   }
 }

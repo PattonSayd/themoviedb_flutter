@@ -6,6 +6,7 @@ import 'package:the_movie/ui/screens/movies/models/movie_list_model.dart';
 import 'package:the_movie/ui/screens/movies/movies_popular_screen.dart';
 import 'package:the_movie/app/theme/app_colors.dart';
 
+import '../../../services/routes/app_routes.dart';
 import '../news/news_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -41,7 +42,9 @@ class _MainScreenState extends State<MainScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () => SessionProvider().setSessionId(null),
+            onPressed: () => SessionProvider().setSessionId(null).then(
+                (value) => Navigator.of(context).pushNamedAndRemoveUntil(
+                    AppRouteName.auth, (route) => false)),
             icon: const Icon(Icons.logout_sharp),
           )
         ],

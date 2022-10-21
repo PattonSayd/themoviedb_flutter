@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:the_movie/app/app_model.dart';
+import 'package:the_movie/app/theme/app_colors.dart';
 import 'package:the_movie/services/domain/api_client/api_client.dart';
 import 'package:the_movie/services/providers/provider.dart';
 import 'package:the_movie/services/routes/app_routes.dart';
@@ -19,6 +21,15 @@ class MovieDetalisScreen extends StatefulWidget {
 }
 
 class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    final model = StateNotifierProvider.read<MovieDetailsModel>(context);
+    final appModel = Provider.read<AppModel>(context);
+    model?.onSessionExpired = () => appModel?.resetSession(context);
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -44,8 +55,19 @@ class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
             ? model?.getImagePalette(NetworkImage(fullPath))
             : null,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return const Center(
+              child: SizedBox(
+                width: 100,
+                height: 3,
+                child: LinearProgressIndicator(
+                  color: AppColors.theme,
+                ),
+              ),
+            );
+          }
           return ColoredBox(
-            color: snapshot.data ?? Colors.transparent,
+            color: snapshot.data ?? Colors.black87,
             child: const _BodyWidget(),
           );
         },
@@ -69,13 +91,13 @@ class _BodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    final movieDetails = model?.movieDetails;
-    if (movieDetails == null) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
+    // final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    // final movieDetails = model?.movieDetails;
+    // if (movieDetails == null) {
+    //   return const Center(
+    //     child: CircularProgressIndicator(color: Color.fromARGB(179, 225, 7, 7)),
+    //   );
+    // }
     return ListView(
       children: const [
         _MovieDetailsInfoWidget(),
