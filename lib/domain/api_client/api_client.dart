@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:the_movie/services/domain/entity/popular_movie_response.dart';
+import 'package:the_movie/domain/entity/popular_movie_response.dart';
 
 import '../entity/movie_details.dart';
 

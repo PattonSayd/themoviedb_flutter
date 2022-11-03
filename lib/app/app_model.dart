@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:the_movie/services/routes/app_routes.dart';
+import 'package:the_movie/ui/routes/app_routes.dart';
 
-import '../services/providers/session_provider.dart';
+import '../providers/session_provider.dart';
 
 class AppModel {
   final _sessionProvider = SessionProvider();

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:the_movie/services/providers/provider.dart';
-import 'package:the_movie/services/providers/session_provider.dart';
+import 'package:the_movie/providers/provider.dart';
+import 'package:the_movie/providers/session_provider.dart';
 import 'package:the_movie/ui/screens/movies/models/movie_list_model.dart';
 import 'package:the_movie/ui/screens/movies/movies_popular_screen.dart';
-import 'package:the_movie/app/theme/app_colors.dart';
+import 'package:the_movie/ui/theme/app_colors.dart';
 
-import '../../../services/routes/app_routes.dart';
+import '../../routes/app_routes.dart';
+import '../tv_show/tv_show_screen.dart';
 import '../news/news_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -60,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
               isDisposeModel: false,
               child: const MoviesPolularScreen(),
             ),
-            const Text('Tv Show'),
+            const TVShowScreenWidget()
           ],
         ),
       ),

@@ -19,5 +19,7 @@ class AppAssets {
   static const String trailerBackground =
       'assets/images/trailer_background.jpeg';
   static const String trailerPreview = 'assets/images/trailer_preview.jpeg';
+  static const String tvshowPlaceholder =
+      'assets/images/tvshow_placeholder.jpeg';
   static const String walkingdead = 'assets/images/walkingdead.jpg';
 }

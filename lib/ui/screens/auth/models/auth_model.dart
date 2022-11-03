@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:the_movie/services/domain/api_client/api_client.dart';
-import 'package:the_movie/services/providers/session_provider.dart';
-import 'package:the_movie/services/routes/app_routes.dart';
+import 'package:the_movie/domain/api_client/api_client.dart';
+import 'package:the_movie/providers/session_provider.dart';
+import 'package:the_movie/ui/routes/app_routes.dart';
 
 class AuthModel extends ChangeNotifier {
   final _apiClient = ApiCliet();

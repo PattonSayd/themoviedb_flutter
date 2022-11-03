@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:palette_generator/palette_generator.dart';
 
-import '../../../../services/domain/api_client/api_client.dart';
-import '../../../../services/domain/entity/movie_details.dart';
-import '../../../../services/providers/session_provider.dart';
+import '../../../../domain/api_client/api_client.dart';
+import '../../../../domain/entity/movie_details.dart';
+import '../../../../providers/session_provider.dart';
 
 class MovieDetailsModel extends ChangeNotifier {
   final _sessionProvider = SessionProvider();

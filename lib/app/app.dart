@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:the_movie/app/app_model.dart';
-import 'package:the_movie/services/providers/provider.dart';
-import 'package:the_movie/services/routes/app_routes.dart';
+import 'package:the_movie/ui/routes/app_routes.dart';
 
-import 'theme/app_colors.dart';
+import '../ui/theme/app_colors.dart';
 
 class MyApp extends StatelessWidget {
   static final appRoutes = AppRoute();
@@ -12,7 +10,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.read<AppModel>(context);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -33,7 +30,7 @@ class MyApp extends StatelessWidget {
         Locale('en', 'EN'),
       ],
       debugShowCheckedModeBanner: false,
-      initialRoute: appRoutes.initialRoute(model?.isAuth == true),
+      initialRoute: AppRouteName.loader,
       routes: appRoutes.routes,
       onGenerateRoute: appRoutes.onGenerateRoute,
     );

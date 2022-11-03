@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie/services/domain/api_client/api_client.dart';
 import 'package:the_movie/ui/screens/movies/models/movie_list_model.dart';
 
-import '../../../services/providers/provider.dart';
+import '../../../domain/api_client/api_client.dart';
+import '../../../providers/provider.dart';
 
 class MoviesPolularScreen extends StatelessWidget {
   const MoviesPolularScreen({Key? key}) : super(key: key);
