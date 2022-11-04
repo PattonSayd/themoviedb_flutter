@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/provider.dart' as my_provider;
 import '../../ui/screens/auth/auth_screen.dart';
-import '../../ui/screens/auth/models/auth_model.dart';
+import '../../ui/screens/auth/models/auth_viewmodel.dart';
 import '../../ui/screens/loader/loader_screen.dart';
 import '../../ui/screens/loader/viewmodel/loader_viewmodel.dart';
 import '../../ui/screens/main/main_screen.dart';
@@ -24,8 +24,8 @@ class ScreenFactory {
   }
 
   static Widget assemblyAuth() {
-    return my_provider.StateNotifierProvider(
-      create: () => AuthModel(),
+    return ChangeNotifierProvider(
+      create: (_) => AuthViewModel(),
       child: const AuthScreen(),
     );
   }

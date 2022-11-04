@@ -1,22 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:the_movie/providers/provider.dart';
+import 'package:provider/provider.dart';
 
 import 'package:the_movie/app/style/app_text_style.dart';
 import 'package:the_movie/ui/screens/auth/widgets/super_script.dart';
 
 import '../../components/global_input.dart';
 import '../../components/global_text_button.dart';
-import 'models/auth_model.dart';
+import 'models/auth_viewmodel.dart';
 
-class AuthScreen extends StatefulWidget {
+class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
-  @override
-  State<AuthScreen> createState() => _AuthScreenState();
-}
-
-class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +60,7 @@ class _FormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.read<AuthModel>(context)!;
+    final model = context.read<AuthViewModel>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -104,9 +98,9 @@ class _LoginButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<AuthModel>(context);
-    final onPressed = model!.canStartAuth ? () => model.auth(context) : null;
-    final child = model.authInProgress == true
+    final model = context.watch<AuthViewModel>();
+    final onPressed = model.canStartAuth ? () => model.auth(context) : null;
+    final child = model.isAuthProgress
         ? const SizedBox(
             height: 20,
             width: 20,
@@ -118,7 +112,8 @@ class _LoginButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: const Color(0xFF2196F3)),
+        disabledBackgroundColor: const Color(0xFF2196F3),
+      ),
       child: child,
     );
   }
@@ -129,14 +124,11 @@ class _ErrorMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final errorMessage =
-        StateNotifierProvider.watch<AuthModel>(context)?.errorMessage;
-    if (errorMessage == null) return const SizedBox.shrink();
-
+    final eMessage = context.select((AuthViewModel vm) => vm.errorMessage);
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Text(
-        errorMessage,
+        eMessage ?? '',
         style: AppTextStyle.errorText,
       ),
     );
