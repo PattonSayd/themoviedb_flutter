@@ -50,14 +50,14 @@ class _TopPosterWidget extends StatelessWidget {
       child: Stack(
         children: [
           backdropPath != null
-              ? Image.network(ApiCliet.imageUrl(backdropPath))
+              ? Image.network(ImageDownloader.imageUrl(backdropPath))
               : const SizedBox.shrink(),
           Positioned(
             top: 20,
             left: 20,
             bottom: 20,
             child: posterPath != null
-                ? Image.network(ApiCliet.imageUrl(posterPath))
+                ? Image.network(ImageDownloader.imageUrl(posterPath))
                 : const SizedBox.shrink(),
           ),
           Positioned(

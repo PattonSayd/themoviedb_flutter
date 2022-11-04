@@ -2,13 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:palette_generator/palette_generator.dart';
 
-import '../../../../domain/api_client/api_client.dart';
+import '../../../../domain/api_client/account_api_client.dart';
+import '../../../../domain/api_client/movie_api_client.dart';
+import '../../../../domain/api_client/api_client_exceptions.dart';
 import '../../../../domain/entity/movie_details.dart';
 import '../../../../providers/session_provider.dart';
 
 class MovieDetailsModel extends ChangeNotifier {
   final _sessionProvider = SessionProvider();
-  final _apiClient = ApiCliet();
+  final _movieApiClient = MovieApiCliet();
+  final _accountApiClient = AccountApiClient();
 
   final int movieId;
   MovieDetails? _movieDetails;
@@ -35,10 +38,10 @@ class MovieDetailsModel extends ChangeNotifier {
 
   Future<void> loadDetalis() async {
     try {
-      _movieDetails = await _apiClient.movieDetails(movieId, _locale);
+      _movieDetails = await _movieApiClient.movieDetails(movieId, _locale);
       final sessionId = await _sessionProvider.getSessionId();
       if (sessionId != null) {
-        _isFavorite = await _apiClient.isFavorite(movieId, sessionId);
+        _isFavorite = await _movieApiClient.isFavorite(movieId, sessionId);
       }
       notifyListeners();
     } on ApiClientException catch (e) {
@@ -63,7 +66,7 @@ class MovieDetailsModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _apiClient.markAsFavorite(
+      await _accountApiClient.markAsFavorite(
         accountId: accountId,
         sessionId: sessionId,
         mediaId: movieId,

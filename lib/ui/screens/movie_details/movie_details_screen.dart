@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/app/app_model.dart';
 import 'package:the_movie/ui/theme/app_colors.dart';
-import 'package:the_movie/domain/api_client/api_client.dart';
+import 'package:the_movie/domain/api_client/movie_api_client.dart';
 import 'package:the_movie/providers/provider.dart';
 import 'package:the_movie/ui/routes/app_routes.dart';
 import 'package:the_movie/ui/screens/movie_details/models/movie_details_model.dart';
 
+import '../../../domain/api_client/image_downloader.dart';
 import '../movies/widgets/radial_percent_widget.dart';
 
 part 'widgets/movie_details_info_widget.dart';
@@ -41,7 +42,7 @@ class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
     final posterPath = model?.movieDetails?.posterPath;
     late String fullPath = '';
     if (posterPath != null) {
-      fullPath = ApiCliet.imageUrl(posterPath);
+      fullPath = ImageDownloader.imageUrl(posterPath);
     }
     return Scaffold(
       appBar: AppBar(

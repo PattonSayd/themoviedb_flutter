@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:the_movie/domain/api_client/api_client.dart';
+import 'package:the_movie/domain/api_client/movie_api_client.dart';
 import 'package:the_movie/domain/entity/movie.dart';
 import 'package:the_movie/domain/entity/popular_movie_response.dart';
 
 import '../../../routes/app_routes.dart';
 
 class MovieListModel extends ChangeNotifier {
-  final _apiClient = ApiCliet();
+  final _apiClient = MovieApiCliet();
   final _movies = <Movie>[];
   late DateFormat _dateFormat;
   late int _currentPage;

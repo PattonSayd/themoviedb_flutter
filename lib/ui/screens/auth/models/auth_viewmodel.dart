@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:the_movie/domain/api_client/api_client.dart';
+import 'package:the_movie/domain/api_client/movie_api_client.dart';
 import 'package:the_movie/domain/services/auth_services.dart';
 import 'package:the_movie/ui/routes/app_routes.dart';
+
+import '../../../../domain/api_client/api_client_exceptions.dart';
 
 class AuthViewModel extends ChangeNotifier {
   final _authServices = AuthServices();

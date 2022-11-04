@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:the_movie/domain/api_client/image_downloader.dart';
 import 'package:the_movie/ui/screens/movies/models/movie_list_model.dart';
 
-import '../../../domain/api_client/api_client.dart';
+import '../../../domain/api_client/movie_api_client.dart';
 import '../../../providers/provider.dart';
 
 class MoviesPolularScreen extends StatelessWidget {
@@ -46,7 +47,8 @@ class MoviesPolularScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           posterPath != null
-                              ? Image.network(ApiCliet.imageUrl(posterPath))
+                              ? Image.network(
+                                  ImageDownloader.imageUrl(posterPath))
                               : SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.25,

@@ -85,7 +85,7 @@ class _ActourCardListWigdet extends StatelessWidget {
                 children: [
                   actors[index].profilePath != null
                       ? Image.network(
-                          ApiCliet.imageUrl(actors[index].profilePath!),
+                          ImageDownloader.imageUrl(actors[index].profilePath!),
                           height: 133,
                           width: 140,
                           fit: BoxFit.cover,
