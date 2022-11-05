@@ -8,7 +8,7 @@ import 'package:the_movie/domain/entity/popular_movie_response.dart';
 
 import '../../../routes/app_routes.dart';
 
-class MovieListModel extends ChangeNotifier {
+class MoviesPopularViewModel extends ChangeNotifier {
   final _apiClient = MovieApiCliet();
   final _movies = <Movie>[];
   late DateFormat _dateFormat;
