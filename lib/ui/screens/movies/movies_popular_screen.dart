@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/domain/api_client/image_downloader.dart';
-import 'package:the_movie/ui/screens/movies/models/movie_list_model.dart';
+import 'package:the_movie/ui/screens/movies/viewmodels/movies_popular_viewmodel.dart';
 
-import '../../../domain/api_client/movie_api_client.dart';
 import '../../../providers/provider.dart';
 
 class MoviesPolularScreen extends StatelessWidget {
@@ -10,7 +9,7 @@ class MoviesPolularScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieListModel>(context);
+    final model = StateNotifierProvider.watch<MoviesPopularViewModel>(context);
     return Stack(
       children: [
         ListView.builder(
