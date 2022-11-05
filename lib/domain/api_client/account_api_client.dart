@@ -10,7 +10,7 @@ extension MediaTypeAsString on MediaType {
         return 'movie';
 
       case MediaType.tv:
-        return 'tv';
+        return 'sd';
     }
   }
 }
