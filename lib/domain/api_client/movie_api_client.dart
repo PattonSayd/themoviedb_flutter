@@ -9,9 +9,9 @@ class MovieApiCliet {
 
   Future<PopularMovieResponse> popularMovie(
     int page,
-    String locale, [
-    String? searchQuery,
-  ]) async {
+    String locale,
+    String apiKey,
+  ) async {
     PopularMovieResponse parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = PopularMovieResponse.fromJson(jsonMap);
@@ -22,7 +22,7 @@ class MovieApiCliet {
       '/movie/popular',
       parser,
       <String, dynamic>{
-        'api_key': Configuration.apiKey,
+        'api_key': apiKey,
         'page': page.toString(),
         'language': locale,
       },
@@ -35,6 +35,7 @@ class MovieApiCliet {
     int page,
     String locale,
     String query,
+    String apiKey,
   ) async {
     PopularMovieResponse parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
@@ -46,7 +47,7 @@ class MovieApiCliet {
       '/search/movie',
       parser,
       <String, dynamic>{
-        'api_key': Configuration.apiKey,
+        'api_key': apiKey,
         'page': page.toString(),
         'language': locale,
         'query': query,

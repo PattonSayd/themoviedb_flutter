@@ -78,7 +78,7 @@ class _MovieListRowWidget extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          model.stringFormatDate(movie.releaseDate),
+                          movie.releaseDate,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(color: Colors.grey),
