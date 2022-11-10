@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie/app/app_model.dart';
+import 'package:provider/provider.dart';
 import 'package:the_movie/ui/theme/app_colors.dart';
-import 'package:the_movie/domain/api_client/movie_api_client.dart';
-import 'package:the_movie/providers/provider.dart';
 import 'package:the_movie/ui/routes/app_routes.dart';
-import 'package:the_movie/ui/screens/movie_details/models/movie_details_model.dart';
+import 'package:the_movie/ui/screens/movie_details/viewmodel/movie_details_viewmodel.dart';
 
 import '../../../domain/api_client/image_downloader.dart';
 import '../movies/widgets/radial_percent_widget.dart';
@@ -21,28 +19,21 @@ class MovieDetalisScreen extends StatefulWidget {
 
 class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
   @override
-  void initState() {
-    super.initState();
-
-    final model = StateNotifierProvider.read<MovieDetailsModel>(context);
-    final appModel = Provider.read<AppModel>(context);
-    model?.onSessionExpired = () => appModel?.resetSession(context);
-  }
-
-  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    StateNotifierProvider.read<MovieDetailsModel>(context)
-        ?.setupLocale(context);
+    Future.microtask(
+      () => context.read<MovieDetailsViewModel>().setupLocale(context),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    final posterPath = model?.movieDetails?.posterPath;
+    final model = context.read<MovieDetailsViewModel>();
+    final data =
+        context.select((MovieDetailsViewModel vm) => vm.data.posterData);
     late String fullPath = '';
-    if (posterPath != null) {
-      fullPath = ImageDownloader.imageUrl(posterPath);
+    if (data.posterPath != null) {
+      fullPath = ImageDownloader.imageUrl(data.posterPath!);
     }
     return Scaffold(
       appBar: AppBar(
@@ -51,7 +42,7 @@ class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
       ),
       body: FutureBuilder(
         future: fullPath.isNotEmpty
-            ? model?.getImagePalette(NetworkImage(fullPath))
+            ? model.getImagePalette(NetworkImage(fullPath))
             : null,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
@@ -80,8 +71,8 @@ class _TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    return Text(model?.movieDetails?.title ?? 'Loading...');
+    final title = context.select((MovieDetailsViewModel vm) => vm.data.title);
+    return Text(title);
   }
 }
 
@@ -90,13 +81,6 @@ class _BodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    // final movieDetails = model?.movieDetails;
-    // if (movieDetails == null) {
-    //   return const Center(
-    //     child: CircularProgressIndicator(color: Color.fromARGB(179, 225, 7, 7)),
-    //   );
-    // }
     return ListView(
       children: const [
         _MovieDetailsInfoWidget(),

@@ -8,17 +8,17 @@ class LoaderViewModel {
   final _authService = AuthServices();
 
   LoaderViewModel(this.context) {
-    asyncInit();
+    initState();
   }
 
-  Future<void> asyncInit() async {
+  Future<void> initState() async {
     await checkAuth();
   }
 
   Future<void> checkAuth() async {
-    await _authService.isAuth().then((auth) {
-      final nextScreen = auth ? AppRouteName.mainScreen : AppRouteName.auth;
-      Navigator.of(context).pushReplacementNamed(nextScreen);
+    await _authService.isAuth().then((isAuth) {
+      final screen = isAuth ? AppRouteName.mainScreen : AppRouteName.auth;
+      Navigator.of(context).pushReplacementNamed(screen);
     });
   }
 }

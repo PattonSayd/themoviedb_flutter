@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:the_movie/Library/paginator.dart';
 
-import 'package:the_movie/domain/api_client/movie_api_client.dart';
-import 'package:the_movie/domain/entity/popular_movie_response.dart';
 import 'package:the_movie/domain/services/movie_service.dart';
 
 import '../../../../domain/entity/movie.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:the_movie/domain/services/auth_services.dart';
 
-import '../../../../providers/session_provider.dart';
 import '../../../routes/app_routes.dart';
 
 class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
@@ -8,14 +8,16 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = AuthServices();
     return AppBar(
       title: const Text('TMDB'),
       centerTitle: true,
       actions: [
         IconButton(
-          onPressed: () => SessionProvider().setSessionId(null).then((value) =>
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                  AppRouteName.auth, (route) => false)),
+          onPressed: () {
+            authService.logout();
+            AppRoute.validationAuthRoute(context);
+          },
           icon: const Icon(Icons.logout_sharp),
         )
       ],

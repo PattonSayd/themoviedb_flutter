@@ -1,5 +1,3 @@
-import 'package:the_movie/domain/entity/movie_details_video.dart';
-
 typedef PaginatorLoadCallback<T> = Future<PaginatorLoad<T>> Function(int);
 
 class PaginatorLoad<T> {

@@ -55,11 +55,10 @@ class _ActourCardListWigdet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    final actors = model?.movieDetails?.credits.cast;
-    if (actors == null || actors.isEmpty) return const SizedBox.shrink();
+    final data =
+        context.select((MovieDetailsViewModel vm) => vm.data.actorsData);
     return ListView.builder(
-      itemCount: actors.length,
+      itemCount: data.length,
       itemExtent: 140,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
@@ -83,9 +82,9 @@ class _ActourCardListWigdet extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  actors[index].profilePath != null
+                  data[index].profilePath.isNotEmpty
                       ? Image.network(
-                          ImageDownloader.imageUrl(actors[index].profilePath!),
+                          ImageDownloader.imageUrl(data[index].profilePath),
                           height: 133,
                           width: 140,
                           fit: BoxFit.cover,
@@ -101,7 +100,7 @@ class _ActourCardListWigdet extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            actors[index].name,
+                            data[index].name,
                             maxLines: 2,
                             style: const TextStyle(
                               fontSize: 16,
@@ -109,7 +108,7 @@ class _ActourCardListWigdet extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            actors[index].character,
+                            data[index].character,
                             maxLines: 2,
                             style: const TextStyle(
                               fontSize: 13,

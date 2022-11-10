@@ -37,8 +37,8 @@ class AppRoute {
     }
   }
 
-  // static void toLoader(BuildContext context) {
-  //   Navigator.of(context)
-  //       .pushNamedAndRemoveUntil(AppRouteName.loader, (route) => false);
-  // }
+  static void validationAuthRoute(BuildContext context) {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(AppRouteName.loader, (route) => false);
+  }
 }

@@ -42,34 +42,32 @@ class _TopPosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    final backdropPath = model?.movieDetails?.backdropPath;
-    final posterPath = model?.movieDetails?.posterPath;
+    final model = context.watch<MovieDetailsViewModel>();
+    final data =
+        context.select((MovieDetailsViewModel vm) => vm.data.posterData);
+    final backdropPath = data.backdropPath;
+    final posterPath = data.posterPath;
     return AspectRatio(
       aspectRatio: 390 / 219,
       child: Stack(
         children: [
-          backdropPath != null
-              ? Image.network(ImageDownloader.imageUrl(backdropPath))
-              : const SizedBox.shrink(),
-          Positioned(
-            top: 20,
-            left: 20,
-            bottom: 20,
-            child: posterPath != null
-                ? Image.network(ImageDownloader.imageUrl(posterPath))
-                : const SizedBox.shrink(),
-          ),
+          if (backdropPath != null)
+            Image.network(ImageDownloader.imageUrl(backdropPath)),
+          if (posterPath != null)
+            Positioned(
+              top: 20,
+              left: 20,
+              bottom: 20,
+              child: Image.network(ImageDownloader.imageUrl(posterPath)),
+            ),
           Positioned(
             top: 5,
             right: 5,
             child: IconButton(
-              onPressed: () => model?.toggleFavorite(),
+              onPressed: () => model.toggleFavorite(context),
               icon: Icon(
                 color: Colors.amber,
-                model?.isFavorite == true
-                    ? Icons.favorite
-                    : Icons.favorite_border,
+                data.favoriteIcon,
               ),
             ),
           ),
@@ -84,9 +82,7 @@ class _MovieNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    var year = model?.movieDetails?.releaseDate?.year.toString();
-    year = year != null ? ' ($year)' : '';
+    final data = context.select((MovieDetailsViewModel vm) => vm.data.nameData);
     return Container(
       padding: const EdgeInsets.all(20.0),
       width: MediaQuery.of(context).size.width,
@@ -96,14 +92,14 @@ class _MovieNameWidget extends StatelessWidget {
         text: TextSpan(
           children: [
             TextSpan(
-              text: model?.movieDetails?.title ?? '',
+              text: data.name,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
             ),
             TextSpan(
-              text: year,
+              text: data.year,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
@@ -121,14 +117,7 @@ class _ScoreWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var movieDetails =
-        StateNotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
-    var voteAverage = movieDetails?.voteAverage ?? 0;
-    voteAverage = voteAverage * 10;
-    final videos = movieDetails?.videos.results
-        .where((video) => video.type == 'Trailer' && video.site == 'YouTube');
-
-    var trailerKey = videos?.isNotEmpty == true ? videos?.first.key : null;
+    var data = context.select((MovieDetailsViewModel vm) => vm.data.scoreData);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -141,17 +130,17 @@ class _ScoreWidget extends StatelessWidget {
                   width: 45,
                   height: 45,
                   child: RadialPercentWidget(
-                    percent: voteAverage / 100,
+                    percent: data.voteAverage / 100,
                     lineWidth: 3,
                     fillColor: const Color.fromARGB(255, 10, 23, 25),
                     freeColor: const Color.fromARGB(255, 25, 54, 31),
-                    lineColor: voteAverage > 72
+                    lineColor: data.voteAverage > 72
                         ? const Color.fromARGB(255, 37, 203, 103)
-                        : voteAverage < 50
+                        : data.voteAverage < 50
                             ? const Color.fromARGB(255, 203, 37, 37)
                             : const Color.fromARGB(255, 200, 203, 37),
                     child: Text(
-                      voteAverage.toStringAsFixed(0),
+                      data.voteAverage.toStringAsFixed(0),
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
@@ -169,21 +158,23 @@ class _ScoreWidget extends StatelessWidget {
           color: Colors.grey,
         ),
         TextButton(
-            onPressed: trailerKey != null
-                ? () => Navigator.of(context)
-                    .pushNamed(AppRouteName.movieTrailer, arguments: trailerKey)
+            onPressed: data.trailerKey != null
+                ? () => Navigator.of(context).pushNamed(
+                    AppRouteName.movieTrailer,
+                    arguments: data.trailerKey)
                 : null,
             child: Row(
               children: [
                 Icon(
                   Icons.play_arrow,
-                  color: trailerKey != null ? Colors.white : Colors.grey,
+                  color: data.trailerKey != null ? Colors.white : Colors.grey,
                 ),
                 const SizedBox(width: 5),
                 Text(
                   'Play Trailer',
                   style: TextStyle(
-                      color: trailerKey != null ? Colors.white : Colors.grey),
+                      color:
+                          data.trailerKey != null ? Colors.white : Colors.grey),
                 ),
               ],
             )),
@@ -197,35 +188,8 @@ class _SummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    var texts = <String>[];
-    final releaseDate = model?.movieDetails?.releaseDate;
-    if (releaseDate != null) {
-      texts.add(model!.stringFormatDate(releaseDate));
-    }
-    final productionCountries = model?.movieDetails?.productionCountries;
-    if (productionCountries != null && productionCountries.isNotEmpty) {
-      var countries = <String>[];
-      for (var country in productionCountries) {
-        countries.add(country.iso);
-      }
-      texts.add('(${countries.join(', ')})');
-    }
-    final runtime = model?.movieDetails?.runtime ?? 0;
-    final duration = Duration(minutes: runtime);
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    texts.add('${hours}h ${minutes}m');
-
-    final genres = model?.movieDetails?.genres;
-    if (genres != null && genres.isNotEmpty) {
-      var genresNames = <String>[];
-      for (var genr in genres) {
-        genresNames.add(genr.name);
-      }
-      texts.add(genresNames.join(', '));
-    }
-
+    final summary =
+        context.select((MovieDetailsViewModel vm) => vm.data.summary);
     return Container(
       decoration: const BoxDecoration(
         border: Border.symmetric(
@@ -238,7 +202,7 @@ class _SummaryWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           child: Text(
-            texts.join(' '),
+            summary,
             maxLines: 3,
             textAlign: TextAlign.center,
             style: const TextStyle(
@@ -258,17 +222,20 @@ class _PeopleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
-    final employees = model?.movieDetails?.credits.crew.take(4).toList();
-    if (employees == null || employees.isEmpty) return const SizedBox.shrink();
+    final peopleData =
+        context.select((MovieDetailsViewModel vm) => vm.data.peopleData);
+
     return Row(
       children: [
         Flexible(
           child: Wrap(
             children: [
-              for (var employee in employees)
-                _buildPeopleResume(context,
-                    fullName: employee.name, jobTitle: employee.job),
+              for (var employee in peopleData.first)
+                _buildPeopleResume(
+                  context,
+                  fullName: employee.name,
+                  jobTitle: employee.job,
+                ),
             ],
           ),
         ),
@@ -315,10 +282,11 @@ class _DescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = StateNotifierProvider.watch<MovieDetailsModel>(context);
+    final overview =
+        context.select((MovieDetailsViewModel vm) => vm.data.overview);
 
     return Text(
-      model?.movieDetails?.overview ?? '',
+      overview,
       style: const TextStyle(
         color: Colors.white,
         fontSize: 16,
