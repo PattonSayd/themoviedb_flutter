@@ -21,9 +21,10 @@ class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Future.microtask(
-      () => context.read<MovieDetailsViewModel>().setupLocale(context),
-    );
+
+    final locale = Localizations.localeOf(context);
+    Future.microtask(() =>
+        context.read<MovieDetailsViewModel>().setupLocale(context, locale));
   }
 
   @override
@@ -48,9 +49,10 @@ class _MovieDetalisScreenState extends State<MovieDetalisScreen> {
           if (snapshot.data == null) {
             return const Center(
               child: SizedBox(
-                width: 100,
-                height: 3,
-                child: LinearProgressIndicator(
+                width: 30,
+                height: 30,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
                   color: AppColors.theme,
                 ),
               ),
