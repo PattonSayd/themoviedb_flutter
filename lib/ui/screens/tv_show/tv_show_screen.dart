@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/app/resources/resources.dart';
-import 'package:the_movie/ui/routes/app_routes.dart';
+import 'package:the_movie/app/routes/app_routes.dart';
 
 class TVShow {
   final int id;

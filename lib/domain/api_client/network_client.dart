@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:the_movie/domain/api_client/api_client_exceptions.dart';
 
-import '../../configuration/configuration.dart';
+import '../../app/configuration/configuration.dart';
 
 class NetworkClient {
   final _client = HttpClient();

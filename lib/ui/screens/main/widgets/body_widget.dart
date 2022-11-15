@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/factories/screen_factory.dart';
+import '../../../../app/factories/screen_factory.dart';
 import '../viewmodel/main_viewmodel.dart';
 
 class BodyWidget extends StatelessWidget {

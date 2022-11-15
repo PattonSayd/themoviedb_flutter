@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:the_movie/ui/routes/app_routes.dart';
+import 'package:the_movie/app/routes/app_routes.dart';
 
 import '../../../../domain/services/auth_services.dart';
 

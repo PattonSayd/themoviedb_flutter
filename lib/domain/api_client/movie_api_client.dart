@@ -1,7 +1,7 @@
 import 'package:the_movie/domain/api_client/network_client.dart';
 import 'package:the_movie/domain/entity/popular_movie_response.dart';
 
-import '../../configuration/configuration.dart';
+import '../../app/configuration/configuration.dart';
 import '../entity/movie_details.dart';
 
 class MovieApiCliet {

@@ -1,4 +1,4 @@
-import 'package:the_movie/configuration/configuration.dart';
+import 'package:the_movie/app/configuration/configuration.dart';
 
 class ImageDownloader {
   ImageDownloader._();

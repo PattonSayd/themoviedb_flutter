@@ -29,8 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.4
   cupertino_icons: ^1.0.2
+  provider: ^6.0.4
   google_nav_bar: ^5.0.6
   spider: 
   flutter_secure_storage: ^6.0.0

@@ -1,14 +1,14 @@
-import 'package:the_movie/configuration/configuration.dart';
+import 'package:the_movie/app/configuration/configuration.dart';
 import 'package:the_movie/domain/locale_entity.dart/movie_details_locale.dart';
 
-import '../../providers/session_provider.dart';
+import '../data_providers/session_data_provider.dart';
 import '../api_client/account_api_client.dart';
 import '../api_client/movie_api_client.dart';
 import '../entity/popular_movie_response.dart';
 
 class MovieService {
   final _movieApiClient = MovieApiCliet();
-  final _sessionProvider = SessionProvider();
+  final _sessionProvider = SessionDataProvider();
   final _accountApiClient = AccountApiClient();
 
   Future<PopularMovieResponse> popularMovie(int page, String locale) async =>

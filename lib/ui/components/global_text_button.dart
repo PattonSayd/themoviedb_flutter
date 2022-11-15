@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../app/style/app_button_style.dart';
+import '../style/app_button_style.dart';
 
 class GlobalTextButton extends StatelessWidget {
   final String caption;

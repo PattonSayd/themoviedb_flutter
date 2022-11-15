@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:the_movie/app/style/app_text_style.dart';
+import 'package:the_movie/ui/style/app_text_style.dart';
 import 'package:the_movie/ui/screens/auth/widgets/super_script.dart';
 
 import '../../components/global_input.dart';

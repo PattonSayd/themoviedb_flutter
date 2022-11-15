@@ -1,4 +1,4 @@
-import '../../configuration/configuration.dart';
+import '../../app/configuration/configuration.dart';
 import 'network_client.dart';
 
 enum MediaType { movie, tv }

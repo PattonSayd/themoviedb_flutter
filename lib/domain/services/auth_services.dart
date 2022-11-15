@@ -1,12 +1,12 @@
 import 'package:the_movie/domain/api_client/account_api_client.dart';
 import 'package:the_movie/domain/api_client/auth_api_client.dart';
 
-import '../../providers/session_provider.dart';
+import '../data_providers/session_data_provider.dart';
 
 class AuthServices {
   final _authApiClient = AuthApiClient();
   final _accountApiClient = AccountApiClient();
-  final _sessionProvider = SessionProvider();
+  final _sessionProvider = SessionDataProvider();
 
   Future<bool> isAuth() async {
     final sessionId = await _sessionProvider.getSessionId();

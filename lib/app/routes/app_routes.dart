@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie/domain/factories/screen_factory.dart';
+import 'package:the_movie/app/factories/screen_factory.dart';
 
 abstract class AppRouteName {
   static const loader = '/';

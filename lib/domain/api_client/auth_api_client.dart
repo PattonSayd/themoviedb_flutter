@@ -1,6 +1,6 @@
 import 'package:the_movie/domain/api_client/network_client.dart';
 
-import '../../configuration/configuration.dart';
+import '../../app/configuration/configuration.dart';
 
 class AuthApiClient {
   final _networkClient = NetworkClient();
