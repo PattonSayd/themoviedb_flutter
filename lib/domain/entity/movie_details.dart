@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:the_movie/domain/entity/movie_details_credits.dart';
 import 'package:the_movie/domain/entity/movie_details_video.dart';
 
-import '../../app/date_parser.dart';
+import '../../Library/date_parser.dart';
 
 part 'movie_details.g.dart';
 

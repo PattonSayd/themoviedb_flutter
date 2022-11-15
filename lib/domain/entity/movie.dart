@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../app/date_parser.dart';
+import '../../Library/date_parser.dart';
 
 part 'movie.g.dart';
 
