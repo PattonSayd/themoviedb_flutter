@@ -1,4 +1,4 @@
-part of '../movie_details_screen.dart';
+part of 'movie_details_screen.dart';
 
 class _MovieDetailsInfoWidget extends StatelessWidget {
   const _MovieDetailsInfoWidget({Key? key}) : super(key: key);

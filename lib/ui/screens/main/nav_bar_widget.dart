@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
-import '../../../theme/app_colors.dart';
-import '../viewmodel/main_viewmodel.dart';
+import '../../theme/app_colors.dart';
+import 'main_viewmodel.dart';
 
 class NavBarWidget extends StatelessWidget {
   const NavBarWidget({super.key});

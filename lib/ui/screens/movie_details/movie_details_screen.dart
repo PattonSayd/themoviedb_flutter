@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_movie/ui/theme/app_colors.dart';
 import 'package:the_movie/app/routes/app_routes.dart';
-import 'package:the_movie/ui/screens/movie_details/viewmodel/movie_details_viewmodel.dart';
+import 'package:the_movie/ui/screens/movie_details/movie_details_viewmodel.dart';
 
 import '../../../domain/api_client/image_downloader.dart';
-import '../movies/widgets/radial_percent_widget.dart';
+import '../movies/radial_percent_widget.dart';
 
-part 'widgets/movie_details_info_widget.dart';
-part 'widgets/movie_details_cast_widget.dart';
+part 'movie_details_info_widget.dart';
+part 'movie_details_cast_widget.dart';
 
 class MovieDetalisScreen extends StatefulWidget {
   const MovieDetalisScreen({Key? key}) : super(key: key);

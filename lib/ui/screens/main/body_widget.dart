@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../app/factories/screen_factory.dart';
-import '../viewmodel/main_viewmodel.dart';
+import '../../../app/factories/screen_factory.dart';
+import 'main_viewmodel.dart';
 
 class BodyWidget extends StatelessWidget {
   const BodyWidget({super.key});

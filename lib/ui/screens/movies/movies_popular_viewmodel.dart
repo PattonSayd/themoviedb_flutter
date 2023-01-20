@@ -7,8 +7,8 @@ import 'package:the_movie/Library/paginator.dart';
 
 import 'package:the_movie/domain/services/movie_service.dart';
 
-import '../../../../domain/entity/movie.dart';
-import '../../../../app/routes/app_routes.dart';
+import '../../../domain/entity/movie.dart';
+import '../../../app/routes/app_routes.dart';
 
 class MoviesDataItem {
   final int id;

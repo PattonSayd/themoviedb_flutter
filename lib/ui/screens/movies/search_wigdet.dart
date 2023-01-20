@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../viewmodels/movies_popular_viewmodel.dart';
+import 'movies_popular_viewmodel.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({

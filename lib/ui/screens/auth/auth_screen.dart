@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:the_movie/ui/style/app_text_style.dart';
-import 'package:the_movie/ui/screens/auth/widgets/super_script.dart';
+import 'package:the_movie/ui/screens/auth/super_script.dart';
 
 import '../../components/global_input.dart';
 import '../../components/global_text_button.dart';
-import 'models/auth_viewmodel.dart';
+import 'auth_viewmodel.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);

@@ -11,7 +11,7 @@ abstract class AppRouteName {
 
 class AppRoute {
   final routes = <String, Widget Function(BuildContext)>{
-    AppRouteName.loader: (_) => ScreenFactory.assemblyLoader(),
+    AppRouteName.loader: (_) => ScreenFactory().assemblyLoader(),
     AppRouteName.auth: (_) => ScreenFactory.assemblyAuth(),
     AppRouteName.mainScreen: (_) => ScreenFactory.assemblyMain()
   };

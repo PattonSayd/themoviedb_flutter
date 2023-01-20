@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/api_client/image_downloader.dart';
-import '../viewmodels/movies_popular_viewmodel.dart';
+import '../../../domain/api_client/image_downloader.dart';
+import 'movies_popular_viewmodel.dart';
 
 class MovieListWidget extends StatelessWidget {
   const MovieListWidget({

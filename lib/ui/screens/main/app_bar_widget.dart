@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/domain/services/auth_services.dart';
 
-import '../../../../app/routes/app_routes.dart';
+import '../../../app/routes/app_routes.dart';
 
 class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
   const AppBarWidget({super.key});

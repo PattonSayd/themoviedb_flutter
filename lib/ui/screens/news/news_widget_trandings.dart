@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie/app/resources/resources.dart';
 
-import '../movies/widgets/radial_percent_widget.dart';
+import '../movies/radial_percent_widget.dart';
 
 class NewsWidgetTrandings extends StatefulWidget {
   const NewsWidgetTrandings({Key? key}) : super(key: key);
