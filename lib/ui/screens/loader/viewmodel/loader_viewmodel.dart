@@ -8,10 +8,10 @@ class LoaderViewModel {
   final _authService = AuthServices();
 
   LoaderViewModel(this.context) {
-    initState();
+    initial();
   }
 
-  Future<void> initState() async {
+  Future<void> initial() async {
     await checkAuth();
   }
 
