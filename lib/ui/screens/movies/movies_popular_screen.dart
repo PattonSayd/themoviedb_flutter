@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_movie/ui/screens/movies/movies_popular_viewmodel.dart';
 import 'package:the_movie/ui/screens/movies/movie_list_widget.dart';
 import 'package:the_movie/ui/screens/movies/search_wigdet.dart';

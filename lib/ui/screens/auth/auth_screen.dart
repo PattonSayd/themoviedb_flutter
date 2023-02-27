@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:the_movie/ui/style/app_text_style.dart';
 import 'package:the_movie/ui/screens/auth/super_script.dart';

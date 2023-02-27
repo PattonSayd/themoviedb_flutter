@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/api_client/image_downloader.dart';
 import 'movies_popular_viewmodel.dart';

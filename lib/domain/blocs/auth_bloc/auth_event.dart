@@ -1,14 +1,14 @@
 abstract class AuthEvent {}
 
-class CheckAuthEvent extends AuthEvent {}
+class AuthCheckEvent extends AuthEvent {}
 
-class LogoutAuthEvent extends AuthEvent {}
+class AuthLogoutEvent extends AuthEvent {}
 
-class LoginAuthEvent extends AuthEvent {
+class AuthLoginEvent extends AuthEvent {
   final String login;
   final String password;
 
-  LoginAuthEvent({
+  AuthLoginEvent({
     required this.login,
     required this.password,
   });

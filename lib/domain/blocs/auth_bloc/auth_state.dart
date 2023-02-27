@@ -1,36 +1,36 @@
 abstract class AuthState {}
 
-class AuthorizedAuthState extends AuthState {
+class AuthInitial extends AuthState {}
+
+class AuthorizedState extends AuthState {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is AuthorizedAuthState && runtimeType == other.runtimeType);
+      (other is AuthorizedState && runtimeType == other.runtimeType);
 
   @override
   int get hashCode => 0;
 }
 
-class NotAuthorizedAuthState extends AuthState {
+class UnauthorizedState extends AuthState {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is NotAuthorizedAuthState && runtimeType == other.runtimeType);
+      (other is UnauthorizedState && runtimeType == other.runtimeType);
 
   @override
   int get hashCode => 0;
 }
 
-class InProgressAuthState extends AuthState {}
-
-class FailureAuthState extends AuthState {
+class AuthFailureState extends AuthState {
   final Object error;
 
-  FailureAuthState({required this.error});
+  AuthFailureState({required this.error});
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FailureAuthState &&
+      (other is AuthFailureState &&
           runtimeType == other.runtimeType &&
           error == other.error);
 
