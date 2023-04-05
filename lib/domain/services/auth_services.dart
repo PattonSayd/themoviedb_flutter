@@ -1,6 +1,5 @@
 import 'package:the_movie/domain/api_client/account_api_client.dart';
 import 'package:the_movie/domain/api_client/auth_api_client.dart';
-
 import '../data_providers/session_data_provider.dart';
 
 class AuthServices {
@@ -16,10 +15,12 @@ class AuthServices {
   }
 
   Future<void> login(String login, String password) async {
-    final sessionId =
-        await _authApiClient.auth(username: login, password: password);
-    final accountId = await _accountApiClient.getAccountInfo(sessionId);
+    final sessionId = await _authApiClient.auth(
+      username: login,
+      password: password,
+    );
 
+    final accountId = await _accountApiClient.getAccountInfo(sessionId);
     await _sessionProvider.setSessionId(sessionId);
     await _sessionProvider.setAccountId(accountId);
   }

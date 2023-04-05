@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:the_movie/app/factories/screen_factory.dart';
 
 abstract class AppRouteName {
