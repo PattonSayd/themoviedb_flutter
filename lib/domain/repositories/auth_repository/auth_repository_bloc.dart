@@ -4,39 +4,41 @@ import 'package:bloc_concurrency/bloc_concurrency.dart';
 import '../../api_client/account_api_client.dart';
 import '../../api_client/auth_api_client.dart';
 import '../../data_providers/session_data_provider.dart';
-import 'auth_event.dart';
-import 'auth_state.dart';
+import 'auth_repository_event.dart';
+import 'auth_repository_state.dart';
 
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
+class AuthRepositoryBloc
+    extends Bloc<AuthRepositoryEvent, AuthRepositoryState> {
   final _authApiClient = AuthApiClient();
   final _accountApiClient = AccountApiClient();
   final _sessionProvider = SessionDataProvider();
 
-  AuthBloc(AuthState initialState) : super(initialState) {
-    on<AuthEvent>((event, emit) async {
-      if (event is AuthCheckEvent) {
+  AuthRepositoryBloc(AuthRepositoryState initialState) : super(initialState) {
+    on<AuthRepositoryEvent>((event, emit) async {
+      if (event is AuthCheckRepositoryEvent) {
         await _onCheckAuthEvent(event, emit);
-      } else if (event is AuthLoginEvent) {
+      } else if (event is AuthLoginRepositoryEvent) {
         await onLoginAuthEvent(event, emit);
-      } else if (event is AuthLogoutEvent) {
+      } else if (event is AuthLogoutRepositoryEvent) {
         await onLogoutAuthEvent(event, emit);
       }
     }, transformer: sequential());
   }
 
   Future<void> _onCheckAuthEvent(
-    AuthCheckEvent event,
-    Emitter<AuthState> emit,
+    AuthCheckRepositoryEvent event,
+    Emitter<AuthRepositoryState> emit,
   ) async {
     final sessionId = await _sessionProvider.getSessionId();
-    final newState =
-        sessionId != null ? AuthorizedState() : UnauthorizedState();
+    final newState = sessionId != null
+        ? AuthorizedRepositoryState()
+        : UnauthorizedRepositoryState();
     emit(newState);
   }
 
   Future<void> onLoginAuthEvent(
-    AuthLoginEvent event,
-    Emitter<AuthState> emit,
+    AuthLoginRepositoryEvent event,
+    Emitter<AuthRepositoryState> emit,
   ) async {
     try {
       final sessionId = await _authApiClient.auth(
@@ -44,21 +46,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final accountId = await _accountApiClient.getAccountInfo(sessionId);
       await _sessionProvider.setSessionId(sessionId);
       await _sessionProvider.setAccountId(accountId);
-      emit(AuthorizedState());
+      emit(AuthorizedRepositoryState());
     } catch (e) {
-      emit(AuthFailureState(error: e));
+      emit(AuthFailureRepositoryState(error: e));
     }
   }
 
   Future<void> onLogoutAuthEvent(
-    AuthLogoutEvent event,
-    Emitter<AuthState> emit,
+    AuthLogoutRepositoryEvent event,
+    Emitter<AuthRepositoryState> emit,
   ) async {
     try {
       await _sessionProvider.unSetSessionId();
       await _sessionProvider.unSetAccountId();
     } catch (e) {
-      emit(AuthFailureState(error: e));
+      emit(AuthFailureRepositoryState(error: e));
     }
   }
 }

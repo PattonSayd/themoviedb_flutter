@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:the_movie/app/routes/app_routes.dart';
-import 'package:the_movie/domain/blocs/loader/loader_cubit.dart';
+
+import '../../blocs/loader_cubit/loader_cubit.dart';
 
 class LoaderScreen extends StatelessWidget {
   const LoaderScreen({super.key});

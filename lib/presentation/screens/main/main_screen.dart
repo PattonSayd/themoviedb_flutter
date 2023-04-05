@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie/ui/screens/main/app_bar_widget.dart';
-import 'package:the_movie/ui/screens/main/body_widget.dart';
-import 'package:the_movie/ui/screens/main/nav_bar_widget.dart';
+import 'package:the_movie/presentation/screens/main/app_bar_widget.dart';
+import 'package:the_movie/presentation/screens/main/body_widget.dart';
+import 'package:the_movie/presentation/screens/main/nav_bar_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

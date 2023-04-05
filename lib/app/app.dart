@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:the_movie/app/routes/app_routes.dart';
 
-import '../ui/theme/app_colors.dart';
+import '../presentation/theme/app_colors.dart';
 
 class MyApp extends StatelessWidget {
   static final appRoutes = AppRoute();
