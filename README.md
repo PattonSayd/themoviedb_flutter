@@ -6,7 +6,7 @@ A Flutter app that uses the "[The Movie DB](https://www.themoviedb.org/)" api to
 
 
 <div style="display: flex">
-<img src="./templates/tl1.png" width="250">
+<img src="./templates/tl.png" width="250">
 <img src="./templates/tl2.png" width="250">
 <img src="./templates/tl3.png" width="250">
 <img src="./templates/tl4.png" width="250">
