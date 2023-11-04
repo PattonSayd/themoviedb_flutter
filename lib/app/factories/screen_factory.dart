@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import 'package:the_movie/domain/repositories/auth_repository/auth_repository_bloc.dart';
+import 'package:the_movie/app/repositories/auth_repository/auth_repository_bloc.dart';
 import 'package:the_movie/presentation/screens/movies/movies_popular_screen.dart';
 
-import '../../domain/repositories/auth_repository/auth_repository_state.dart';
+import '../repositories/auth_repository/auth_repository_state.dart';
 import '../../presentation/blocs/loader_cubit/loader_cubit.dart';
 import '../../presentation/screens/auth/auth_screen.dart';
 import '../../presentation/screens/auth/auth_viewmodel.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/api_client/image_downloader.dart';
+import '../../../app/api_client/image_downloader.dart';
 import 'movies_popular_viewmodel.dart';
 
 class MovieListWidget extends StatelessWidget {
