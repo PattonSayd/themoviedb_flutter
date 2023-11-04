@@ -4,7 +4,7 @@ import 'package:the_movie/presentation/theme/app_colors.dart';
 import 'package:the_movie/app/routes/app_routes.dart';
 import 'package:the_movie/presentation/screens/movie_details/movie_details_viewmodel.dart';
 
-import '../../../domain/api_client/image_downloader.dart';
+import '../../../app/api_client/image_downloader.dart';
 import '../movies/radial_percent_widget.dart';
 
 part 'movie_details_info_widget.dart';

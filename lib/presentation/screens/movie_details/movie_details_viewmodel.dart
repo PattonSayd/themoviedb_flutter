@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:the_movie/Library/localized_storage.dart';
-import 'package:the_movie/domain/services/auth_services.dart';
-import 'package:the_movie/domain/services/movie_service.dart';
+import 'package:the_movie/app/services/auth_services.dart';
+import 'package:the_movie/app/services/movie_service.dart';
 import 'package:the_movie/app/routes/app_routes.dart';
 
-import '../../../domain/api_client/api_client_exceptions.dart';
+import '../../../app/api_client/api_client_exceptions.dart';
 import '../../../domain/entity/movie_details.dart';
 
 class MovieDetailsDataItem {

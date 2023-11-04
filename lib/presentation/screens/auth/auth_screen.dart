@@ -5,7 +5,6 @@ import 'package:the_movie/presentation/style/app_text_style.dart';
 import 'package:the_movie/presentation/screens/auth/super_script.dart';
 
 import '../../components/global_input.dart';
-import '../../components/global_text_button.dart';
 import 'auth_viewmodel.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -15,9 +14,12 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Login to your account ')),
-      body: ListView(children: const [
-        _HeaderWidget(),
-      ]),
+      body: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        children: const [
+          _HeaderWidget(),
+        ],
+      ),
     );
   }
 }
@@ -38,12 +40,6 @@ class _HeaderWidget extends StatelessWidget {
           _buildText(
               'In order to use the editing and rating capabilities of TMDB, as well as get personal recommendations you will need to login to your account. If you do not have an account, registering for an account is free and simple.'),
           const SizedBox(height: 5),
-          GlobalTextButton(caption: 'Register', onPressed: () {}),
-          const SizedBox(height: 25),
-          _buildText(
-              'If you signed up but didn\'t get your verification email, click here to have it resent.'),
-          const SizedBox(height: 5),
-          GlobalTextButton(caption: 'Verify email', onPressed: () {}),
         ],
       ),
     );
@@ -79,11 +75,9 @@ class _FormWidget extends StatelessWidget {
           obscure: true,
         ),
         const SizedBox(height: 20),
-        Row(
+        const Row(
           children: [
-            const _LoginButtonWidget(),
-            const SizedBox(width: 24),
-            GlobalTextButton(caption: 'Reset password', onPressed: () {}),
+            _LoginButtonWidget(),
           ],
         )
       ],

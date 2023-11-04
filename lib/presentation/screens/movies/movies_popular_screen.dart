@@ -20,8 +20,8 @@ class _MoviesPolularScreenState extends State<MoviesPolularScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: const [
+    return const Stack(
+      children: [
         MovieListWidget(),
         SearchWidget(),
       ],

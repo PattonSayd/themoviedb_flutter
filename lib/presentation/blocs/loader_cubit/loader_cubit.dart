@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../domain/repositories/auth_repository/auth_repository_bloc.dart';
-import '../../../domain/repositories/auth_repository/auth_repository_event.dart';
-import '../../../domain/repositories/auth_repository/auth_repository_state.dart';
+import '../../../app/repositories/auth_repository/auth_repository_bloc.dart';
+import '../../../app/repositories/auth_repository/auth_repository_event.dart';
+import '../../../app/repositories/auth_repository/auth_repository_state.dart';
 
 part 'loader_state.dart';
 
